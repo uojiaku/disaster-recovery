@@ -8,7 +8,7 @@ The following procedure generates a single file that contains the ETCD snapshot 
 
 ### Procedure
 
-#### Step 1. Access a master host
+Step 1. Access a master host
 
 Step 2. If the cluster-wide proxy is enabled, be sure that you have exported the NO_PROXY, HTTP_PROXY, and HTTPS_PROXY environment variables.
 
