@@ -25,6 +25,16 @@ Step 3. Run the ```etcd-snapshot-backup.sh``` script and make sure to pass in th
 
 ## Replacing a failed master host
 
+### Procedure
+
+To replace a single master host:
+
+Step 1. remove the member from the etcd cluster
+
+Step 2. If the etcd certificates for the master host are valid, then add the member back to the etcd cluster.
+
+Step 3. If there are no etcd certificates for the master host or they are no longer 
+
 
 ## Recovering from lost master host
 
