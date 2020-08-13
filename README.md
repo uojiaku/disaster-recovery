@@ -1,4 +1,4 @@
-# disaster-recovery
+# Disaster-Recovery
 
 ## Backing Up ETCD data
 
@@ -12,7 +12,7 @@ Step 1. Access a master host
 
 Step 2. If the cluster-wide proxy is enabled, be sure that you have exported the NO_PROXY, HTTP_PROXY, and HTTPS_PROXY environment variables.
 
-*you can check if the proxy is enabled if the fields ```httpProxy```, ```httpsProxy```, ```noProxy``` are set after running this command ```oc get proxy cluster -o yaml```*
+*you can check if the proxy is enabled if the fields ```httpProxy```, ```httpsProxy```, ```noProxy``` are set after running this command ```oc get proxy cluster -o yaml```.*
 
 Step 3. Run the ```etcd-snapshot-backup.sh``` script and make sure to pass in the location as to where you want the backup to save to. Here is the appropriate command to run: ```sudo -E /usr/local/bin/etcd-snapshot-backup.sh ./assets/backup```.
 
@@ -29,11 +29,43 @@ Step 3. Run the ```etcd-snapshot-backup.sh``` script and make sure to pass in th
 
 To replace a single master host:
 
-Step 1. remove the member from the etcd cluster
+#### I. Remove the member from the etcd cluster.
 
-Step 2. If the etcd certificates for the master host are valid, then add the member back to the etcd cluster.
+Prerequisites:
 
-Step 3. If there are no etcd certificates for the master host or they are no longer 
+- access to the cluster as a user with the ```cluster-admin``` role.
+
+- SSH access to an active master host.
+
+Procedure:
+
+1. View pods associated with ETCD.
+
+```oc get pods -n openshift-etcd```
+
+2. Access an active master host.
+
+3. Run the ```etcd-member-remove.sh``` script and pass in the name of the ETCD member to remove.
+
+```sudo -E /usr/local/bin/etcd-member-remove.sh etcd-member-ip-10-x-x-x.subdomain.domain```
+
+4. Verify that the etcd member has been successfully removed from the cluster.
+
+a. Connect to the running etcd container.
+
+```id=$(sudo crictl ps --name etcd-member | awk 'FNR==2{ print $1}') && sudo crictl exec -it $id /bin/sh```
+
+b. In the etcd container, export the variables needed for connecting to etcd.
+
+```export ETCDCTL_API=3 ETCDCTL_CACERT=/etc/ssl/etcd/ca.crt ETCDCTL_CERT=$(find /etc/ssl/ -name *peer*crt) ETCDCTL_KEY=$(find /etc/ssl/ -name *peer*key)```
+
+c. In the etcd container, execute etcdctl member list and verify that the removed member is no longer listed:
+
+```etcdctl member list -w table```
+
+#### II. If the etcd certificates for the master host are valid, then add the member back to the etcd cluster.
+
+#### III. If there are no etcd certificates for the master host or they are no longer.
 
 
 ## Recovering from lost master host
