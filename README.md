@@ -11,7 +11,7 @@ The following procedure generates a single file that contains the ETCD snapshot 
 Step 1. Access a master host
 
 Step 2. If the cluster-wide proxy is enabled, be sure that you have exported the NO_PROXY, HTTP_PROXY, and HTTPS_PROXY environment variables.
-*you can check if the proxy is enabled if the fields ```httpProxy```, ```httpsProxy```, ```noProxy``` are set after running this command ```oc get proxy cluster -o yaml```*
+**you can check if the proxy is enabled if the fields ```httpProxy```, ```httpsProxy```, ```noProxy``` are set after running this command ```oc get proxy cluster -o yaml```**
 
 Step 3. Run the ```etcd-snapshot-backup.sh``` script and make sure to pass in the location as to where you want the backup to save to. Here is the appropriate command to run: ```sudo -E /usr/local/bin/etcd-snapshot-backup.sh ./assets/backup```.
 *Two files will be generated in ```./assets/backup```  from the above command*
