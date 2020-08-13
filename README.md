@@ -41,7 +41,7 @@ Procedure:
 
 1. View pods associated with ETCD.
 
-```oc get pods -n openshift-etcd```
+    ```oc get pods -n openshift-etcd```
 
 2. Access an active master host.
 
