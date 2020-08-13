@@ -47,21 +47,21 @@ Procedure:
 
 3. Run the ```etcd-member-remove.sh``` script and pass in the name of the ETCD member to remove.
 
-```sudo -E /usr/local/bin/etcd-member-remove.sh etcd-member-ip-10-x-x-x.subdomain.domain```
+   ```sudo -E /usr/local/bin/etcd-member-remove.sh etcd-member-ip-10-x-x-x.subdomain.domain```
 
 4. Verify that the etcd member has been successfully removed from the cluster.
 
 a. Connect to the running etcd container.
 
-```id=$(sudo crictl ps --name etcd-member | awk 'FNR==2{ print $1}') && sudo crictl exec -it $id /bin/sh```
+   ```id=$(sudo crictl ps --name etcd-member | awk 'FNR==2{ print $1}') && sudo crictl exec -it $id /bin/sh```
 
 b. In the etcd container, export the variables needed for connecting to etcd.
 
-```export ETCDCTL_API=3 ETCDCTL_CACERT=/etc/ssl/etcd/ca.crt ETCDCTL_CERT=$(find /etc/ssl/ -name *peer*crt) ETCDCTL_KEY=$(find /etc/ssl/ -name *peer*key)```
+   ```export ETCDCTL_API=3 ETCDCTL_CACERT=/etc/ssl/etcd/ca.crt ETCDCTL_CERT=$(find /etc/ssl/ -name *peer*crt) ETCDCTL_KEY=$(find /etc/ssl/ -name *peer*key)```
 
 c. In the etcd container, execute etcdctl member list and verify that the removed member is no longer listed:
 
-```etcdctl member list -w table```
+   ```etcdctl member list -w table```
 
 #### II. If the etcd certificates for the master host are valid, then add the member back to the etcd cluster.
 
