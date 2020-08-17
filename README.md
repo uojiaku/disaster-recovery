@@ -65,6 +65,27 @@ Procedure:
 
 #### II. If the etcd certificates for the master host are valid, then add the member back to the etcd cluster.
 
+Prerequisites:
+
+- access to cluster as a user with ```cluster-admin``` role.
+
+- SSH access to master host to add to the etcd cluster.
+
+- Obtain the IP address of an existing active etcd member.
+
+Procedure:
+
+1. Access the master host to add to the etcd cluster.
+
+2. Run the ```etcd-member-add.sh``` script and pass in two parameters:
+
+- IP address of an existing etcd member
+
+- the name of the etcd member to add 
+
+Here's an example below:
+
+
 #### III. If there are no etcd certificates for the master host or they are no longer.
 
 
