@@ -116,7 +116,21 @@ Here's an example below:
     ```oc get pods -n openshift-etcd```
 
 
-#### III. If there are no etcd certificates for the master host or they are no longer.
+#### III. If there are no etcd certificates for the master host or they are no longer valid, then generate etcd certs and add the member to the etcd cluster.
+
+Prerequisites:
+
+- Access to cluster as a user with the ```cluster-admin``` role.
+
+- SSH access to new master host to add to the etcd cluster.
+
+- SSH access to one of the healthy master hosts.
+
+- IP address of one of the healthy master hosts.
+
+Procedure:
+
+
 
 
 ## Recovering from lost master host
