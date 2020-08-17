@@ -89,6 +89,32 @@ Here's an example below:
 
 ![](/images/etcd-member-add-notes.png)
 
+3. Verify that the etcd member has been successfully added to the etcd cluster:
+
+    a. Connect to the running etcd container:
+    
+    ```id=$(sudo crictl ps --name etcd-member | awk 'FNR==2{ print $1}') && sudo crictl exec -it $id /bin/sh```
+    
+    b. In the etcd container, export the variables needed for connecting to etcd:
+    
+    ```export ETCDCTL_API=3 ETCDCTL_CACERT=/etc/ssl/etcd/ca.crt ETCDCTL_CERT=$(find /etc/ssl/ -name *peer*crt) ETCDCTL_KEY=$(find /etc/ssl/ -name *peer*key)```
+    
+    c. In the etcd container, execute ```etcdctl member list``` and verify that the new member is listed:
+    
+    ```etcdctl member list -w table```
+    
+    *it make take up to 10 minutes for the new member to start.*
+    
+    d. In the etcd container, execute ```etcdctl endpoint health``` and verify that the new member is healthy:
+    
+    ```etcdctl endpoint health --cluster```
+    
+4. Verify that the new member is in the list of Pods associated with etcd and that its status is ```Running```.
+
+    In a terminal that has access to the cluster, run the following command:
+    
+    ```oc get pods -n openshift-etcd```
+
 
 #### III. If there are no etcd certificates for the master host or they are no longer.
 
