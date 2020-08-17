@@ -85,6 +85,10 @@ Procedure:
 
 Here's an example below:
 
+![](/images/etcd-member-add.png)
+
+![](/images/etcd-member-add-notes.png)
+
 
 #### III. If there are no etcd certificates for the master host or they are no longer.
 
