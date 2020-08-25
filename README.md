@@ -130,7 +130,27 @@ Prerequisites:
 
 Procedure:
 
+1. Set up a temporary etcd certificate signer service on one of the healthy master node.
 
+    a. Access one of the healthy master nodes and log in to your cluster as a ```cluster-admin``` user using the following command.
+    
+        ```sudo oc login https://localhost:6443```
+        
+    b. Obtain the pull specification for the ```kube-etcd-signer-server``` image.
+    
+        ```export KUBE_ETCD_SIGNER_SERVER=$(sudo oc adm release info --image-for kube-etcd-signer-server --registry-config=/var/lib/kubelet/config.json)```
+        
+    c. Run the ```tokenize-signer.sh``` script.
+    
+    ```sudo -E /usr/local/bin/tokenize-signer.sh ip-10-0-143-125```
+    
+    d. Create the signer Pod using the file that was generated.
+    
+    ```sudo oc create -f assets/manifests/kube-etcd-cert-signer.yaml```
+    
+    e. Verify that the signer is listening on this master node.
+    
+    
 
 
 ## Recovering from lost master host
